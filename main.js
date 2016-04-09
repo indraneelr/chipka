@@ -42,19 +42,24 @@ app.on('ready', function() {
         mainWindow.webContents.send('global-shortcut', 'copy');
     });
 }*/
-
-ipc.on('load-clipboard',function(){
-    superClipboard.fetch(INITIAL_CLIPBOARD_SIZE,function(error,data){
+function fetchClipboardData() {
+    superClipboard.fetch(INITIAL_CLIPBOARD_SIZE, function (error, data) {
         console.log(error);
         clipboardLoaded(data);
     });
-})
+}
+
+ipc.on('load-clipboard',function(){
+    fetchClipboardData();
+});
 
 ipc.on('item-selected',function(event,data){
     console.log("$$$$$$")
     console.log(JSON.stringify(data));
     console.log("-------")
-    superClipboard.selectItem(data);
+    superClipboard.selectItem(data,function(){
+        fetchClipboardData();
+    });
     // mainWindow.webContents.send('clipboard-refreshed');
 });
 

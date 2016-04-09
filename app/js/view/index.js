@@ -63,7 +63,7 @@ var MainWindow = React.createClass({
         ipc.on('clipboard-loaded', function (data) {
             console.log("~~~~~~~~~~~~LOADED~~~~~~~~~~~");
             console.log("in clipboard-loaded handler for arg : ");
-            console.log(data);
+            console.log(JSON.stringify(data));
 
             self.state.initialList = data;
             self.setClipboardState(self.state.initialList);

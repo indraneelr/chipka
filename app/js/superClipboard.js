@@ -71,9 +71,9 @@ function recordLastClipboardSelection(updateCallback) {
     var text = clipboard.readText();
     var self = this;
     fetchLastSeenClipboardText.call(this,function(clipboardItem){
-        console.log("comparing text ***********************");
-        console.log(text);
-        console.log(JSON.stringify(clipboardItem));
+        //console.log("comparing text ***********************");
+        //console.log(text);
+        //console.log(JSON.stringify(clipboardItem));
         // console.log("----------------");
 
         if(clipboardItem.content !== text){
