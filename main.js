@@ -25,9 +25,9 @@ function clipboardLoaded(clipboardItemsList){
 app.on('ready', function() {
     mainWindow = new BrowserWindow({
         frame: false,
-        height: 700,
+        height: 600,
         resizable: false,
-        width: 368
+        width: 550
     });
 
     superClipboard.init(clipboardUpdated);

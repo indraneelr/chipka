@@ -6,43 +6,51 @@
 	<style type="text/css">
 		body{
 			width: 500px;
-			height: 800px;
-			background-color: #22282A;	
+			height: 600px;
+			background-color: #22282A;
 			/*color: #DFDFBF;*/
 			color: #D0B078;
 			padding: 15px;
-			border: 2px solid #456045;
+			border: 3px ridge #304030;
 		}
-		.search-box input{
-			background-color: #32383A;
-			width: 100%;
-			border: 0px solid #667C66;
-			outline: 0;
-		}
-		.section{
-			border: 1px ridge #667C66;
-			margin: 5px 5px 0 5px;
-			padding: 5px;
-		}
-		.current-selection {
-			/*color: #D0B078;*/
-			color: #DFDFBF;
+        .search-box input{
+            background-color: black;
+            width: 100%;
+            border-width: 0;
+            padding: 0px 10px 0px 10px;
+            outline: 0;
+            color: #DFDFBF;
 
+        }
+        .search-box{
+            line-height:30px;
+            font-size: medium;
+
+        }
+        .section{
+			border: 2px solid #304030;
+			margin: 5px 5px 0 5px;
 		}
+
 		ul{
 			list-style:none;
 			padding-left:0;
 		}
 		.clipboard .item{
 			margin: 0 0 10px 0;
+            padding: 0px 10px 0px 10px;
 			border-bottom: 1px solid #284628;
 		}
+        .clipboard .item:first-child{
+            background-color: #152515;
+        }
 		.clipboard{
-			/*border-right:0;*/
-			/*border-left:0;*/
-			/*border-bottom: 0;*/
-			/*border: 0;*/
-		}
+            padding: 0px;
+            background-color: #151515;
+            border-style: inset;
+            border-width: medium;
+
+   		}
 	</style>
 </head>
 <body>
@@ -50,9 +58,9 @@
 		<div class="section search-box">
 			<input type="text" name="search" placeholder="search"></input>
 		</div>
-		<div class="section current-selection">
+	<!--	<div class="section current-selection">
 			<span class="text">At its core, A/B testing is exactly what it sounds like: you have two versions of an element (A and B) and a metric that defines success.</span>
-		</div>
+		</div>-->
 		<div class="section clipboard">
 			<ul class="items">
 				<li class="item">At its core, A/B testing is exactly what it sounds like: you have two versions of an element (A and B) and a metric that defines success. 

@@ -1,80 +1,62 @@
-html,
-body {
-    background: #0C7CA2;
-    height: 725px;
-    overflow: hidden;
-    width: 368px;
-    -webkit-user-select: none;
+body{
+    /*width: 500px;*/
+    /*height: 600px;*/
+    background-color: #22282A;
+    /*color: #DFDFBF;*/
+    color: #D0B078;
+    padding: 15px;
+}
+html{
+    /*border: 3px ridge #304030;*/
+}
+.search-box input{
+    background-color: black;
+    width: 100%;
+    border-width: 0;
+    padding: 0px 10px 0px 10px;
+    outline: 0;
+    color: #DFDFBF;
+
+}
+.search-box{
+    line-height:30px;
+    font-size: medium;
+
+}
+.section{
+    border: 2px solid #304030;
+    margin: 5px 5px 0 5px;
 }
 
-#main {
-    background: #1DCCEB;
-    border-bottom: 1px solid #73E2F7;
-    height: 700px;
+ul{
+    list-style:none;
+    padding-left:0;
 }
-
-.speaker {
-    padding-top: 50px;
-    text-align: center;
+.items{
+    background:none;
+    background:transparent;
+    border:none;
+    outline:none;
+    appearance:none;
 }
-
-.speaker img {
-    height: 194px;
-    width: 274px;
+.clipboard .item{
+    padding: 10px 10px 2px 10px;
+    border-bottom: 1px solid #284628;
 }
-
-#main h1 {
-    color: #fff;
-    padding-right: 6px;
-    padding-top: 5px;
-    text-align: right;
-    text-indent: -10000px;
+.clipboard .item:focus{
+    background-color: green;
 }
-
-#main h1 img {
-    height: 31px;
-    width: 195px;
+.clipboard .items li:first-of-type{
+    background-color: #152515;
 }
+.clipboard{
+    padding: 0px;
+    background-color: #151515;
+    border-style: inset;
+    border-width: medium;
+    overflow: auto;
 
-.buttons {
-    padding: 0 20px;
 }
-
-.buttons > div {
-    text-align: center;
-}
-
-.button-sound {
-    background-color: #0C7CA2;
-    border-radius: 100%;
-    cursor: pointer;
-    display: inline-block;
-    height: 24px;
-    margin-top: 57px;
-    position: relative;
-    width: 24px;
-    box-shadow: 0 4px 0 #044D7F;
-    -webkit-app-region: no-drag;
-}
-
-.button-sound:hover {
-    box-shadow: 0 2px 0 #044D7F;
-    top: 2px;
-}
-
-.button-sound:hover > span {
-    top: -42px;
-}
-
-.button-sound:active {
-    box-shadow: 0 0 0 #044D7F;
-    top: 5px;
-}
-
-.button-sound:active > span {
-    top: -45px;
-}
-
 .button-icon {
     background-size: 30px 30px;
     background-repeat: no-repeat;
@@ -92,13 +74,13 @@ body {
     cursor: pointer;
     display: inline-block;
     height: 32px;
-    position: absolute;
-    text-indent: -10000px;
-    top: 6px;
+    /*position: absolute;*/
+    /*text-indent: -10000px;*/
+    /*top: 6px;*/
     width: 32px;
     z-index: 1;
-
-    -webkit-app-region: no-drag;
+    /*color: #ffffff;*/
+    left: 95%;
 }
 
 .settings {
@@ -108,7 +90,6 @@ body {
 }
 
 .close {
-    background: transparent url('../img/close.png') no-repeat 4px 4px;
     background-size: 24px 24px;
     right: 6px;
 }
