@@ -35,7 +35,9 @@ var superClipboard = function(contentRepository){
             var query = {
                 content: new RegExp(searchText, "i")
             };
-            contentRepository.search(query, resultCallback);
+            contentRepository.search(query, function(err,data){
+                resultCallback(data);
+            });
         },
         selectItem: function (clipboardItem,callback) {
             //console.log("######## selected item #########")
@@ -77,7 +79,7 @@ function recordLastClipboardSelection(updateCallback) {
         // console.log("----------------");
 
         if(clipboardItem.content !== text){
-            
+
             self.save(text,function(err,newClipboardData){
                 console.error(err);
                 console.log("new text detected",text);
@@ -93,7 +95,7 @@ function recordLastClipboardSelection(updateCallback) {
             lastSeenClipboardItem = clipboardItem;
         }
     });
-    
+
 }
 
 function fetchLastSeenClipboardText(resultCallback){

@@ -1,32 +1,18 @@
 'use strict';
-/*
-var remote = require('remote');
-var Tray = remote.require('tray');
-var path = require('path');
-
-
-var trayIcon = null;
-
-if (process.platform === 'darwin') {
-    trayIcon = new Tray(path.join(__dirname, 'img/tray-iconTemplate.png'));
-}
-else {
-    trayIcon = new Tray(path.join(__dirname, 'img/tray-icon-alt.png'));
-}*/
 
 //TODO : remove console logs, introduce proper logging.
 //TODO : introduce exception handling
 //TODO : unit tests
-//TODO : externalize configs
 
 var ipc = require('ipc');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var _ = require('lodash');
 
-var closeEl = document.querySelector('.close');
+var closeEl =document.querySelector('.close');
+
 
 closeEl.addEventListener('click', function () {
-    console.log("caught close event");
     ipc.send('close-main-window');
 });
 
@@ -36,13 +22,19 @@ var DOWN_KEY_CODE = 40;
 var TAB_KEY_CODE = 9;
 
 var MainWindow = React.createClass({
-    filterList: function(event){
-        var updatedList = this.state.initialList;
-        updatedList = updatedList.filter(function(item){
-          return item.content.toLowerCase().search(
-            event.target.value.toLowerCase()) !== -1;
-        });
-        this.setState({items: updatedList});
+    filterList: function(){
+        if(this.searchString){
+            var filterCriteria = this.searchString;
+            var updatedList = this.state.initialList;
+            updatedList = updatedList.filter(function(item){
+              return item.content.toLowerCase().search(
+                filterCriteria.toLowerCase()) !== -1;
+            });
+            this.setState({items: updatedList});
+        }
+        else{
+            this.setState({items: this.state.initialList});
+        }
     },
     getInitialState: function(){
      return {
@@ -51,7 +43,7 @@ var MainWindow = React.createClass({
         }
     },
     componentWillMount:function(){
-        
+
     },
     setClipboardState:function(itemsList){
         this.setState({
@@ -60,34 +52,50 @@ var MainWindow = React.createClass({
         })
     },
     componentDidMount: function(){
-        console.log("~~~~~~~~~~~DID MOUNT~~~~~~~~~~~~");
         var self = this;
-        console.log(this);
-        console.log("---------did mount");
-
         ipc.on('clipboard-updated', function (data) {
-            console.log("~~~~~~~~~~~~UPDATE~~~~~~~~~~~");
             self.state.initialList.unshift(data);
             self.setClipboardState(self.state.initialList);
         });
         ipc.on('clipboard-loaded', function (data) {
-            console.log("~~~~~~~~~~~~LOADED~~~~~~~~~~~");
-            console.log("in clipboard-loaded handler for arg : ");
-            console.log(JSON.stringify(data));
-
             self.state.initialList = data;
             self.setClipboardState(self.state.initialList);
         });
+        ipc.on('clipboard-search-results-fetched',function(searchResults){
+            if(searchResults){
+                self.state.initialList = _.unionBy(self.state.initialList,searchResults,'_id');
+                console.log("search list",self.state.initialList);
+                self.filterList();
+            }
+        })
         ipc.send('load-clipboard');
     },
     onClipboardSelection: function(data){
         this.setState({selectedItem:data});
     },
+
+    searchFullHistory:function(event){
+        if(event && event.nativeEvent && event.nativeEvent.keyCode === ENTER_KEY_CODE){
+            ipc.send('search-clipboard',event.target.value);
+        }
+    },
     render: function(){
+        var self = this;
         return (
             <div>
                 <div className="section search-box">
-                    <input autoFocus type="text" tabIndex="1" placeholder="search" onChange={this.filterList} />
+                    <input
+                        autoFocus
+                        type="text"
+                        tabIndex="1"
+                        placeholder="search"
+                        onChange={function(event){
+                                self.searchString = event.target.value;
+                                self.filterList();
+                            }
+                        }
+                        onKeyDown={this.searchFullHistory}
+                    />
                 </div>
                 <div className="section clipboard">
                     <ClipboardItems items={this.state.items} onSelect={this.onClipboardSelection} />
@@ -99,7 +107,7 @@ var MainWindow = React.createClass({
 
 /*var CurrentSelection = React.createClass({
     render:function(){
-        var content = this.props.item? this.props.item.content : ""; 
+        var content = this.props.item? this.props.item.content : "";
         return (
             <div>{content}</div>
         )
@@ -120,17 +128,13 @@ var ClipboardItems = React.createClass({
             elm.focus();
         }
     },
-    selectItem: function(data,item){
-        console.log('^^^^^^^^^^selectItem^^^^^^^');
-        console.log(JSON.stringify(data));
-        this.props.onSelect(data);
-        ipc.send('item-selected',data);
+    selectItem: function(item,index){
+        this.props.onSelect(item);
+        ipc.send('item-selected',item);
         this.focusOut(this.refs[index]);
     },
 
     keypress:function(event,item,index){
-        console.log("key press detected : ",event,item,index);
-
         if(event ){
             switch(event.keyCode){
                 case ENTER_KEY_CODE:this.selectItem(item,index);
@@ -147,26 +151,26 @@ var ClipboardItems = React.createClass({
         }
     },
     render:function(){
-        console.log("props value"); 
-        console.log(this.props.items);
-        console.log("--------------")
         var self = this;
         self.refs= [];
         return (
             <ul tabIndex="0" className="items" size="10" > {
                     this.props.items.map(function(item,index){
-                       return <li
+                        var content = item ? item.content: "";
+                        return <li
                             tabIndex="1"
                             className="item"
                             onKeyDown={function(event){
-                                self.keypress(event.nativeEvent,item,index);
+                                if(event.target === self.refs[index]){
+                                    self.keypress(event.nativeEvent, item, index);
+                                }
                             }}
                             onClick={self.selectItem.bind(self,item,index)}
                             ref={function(elm){
                                 if(elm){
                                     self.refs[index] = elm;
                                 }
-                            }}>{item.content}
+                            }}>{content}
                             </li>
                     })
                 }
@@ -176,3 +180,5 @@ var ClipboardItems = React.createClass({
 });
 
 ReactDOM.render(<MainWindow/>, document.getElementById('main'));
+
+// exports.MainWindow = MainWindow;

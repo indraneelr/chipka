@@ -1,0 +1,17 @@
+{
+  "name": "Chipka",
+  "version": "0.0.1",
+  "license": "apache",
+  "description": "Chipka app shell",
+  "author": "Indraneel Rao <indraneel.rr@gmail.com>",
+  "private": true,
+  "main": "./js/main.js",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "lodash": "^4.11.1",
+    "nconf": "^0.7.2",
+    "nedb": "^1.7.1",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8"
+  }
+}

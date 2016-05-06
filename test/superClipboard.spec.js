@@ -11,24 +11,25 @@ mockRequire("clipboard",{
     }
 });
 
-mockRequire("./config",{
-    config:{
-        pollInterval:100
-    }
+mockRequire("../app/js/config",{
+  config:{
+    pollInterval:100,
+    db: "/Users/indraner/dev/projects/myprojects/chipka/db/test-clipboardHistory"
+}
 });
-var config = require('../app/js/config').testConfig;
+var config = require('../app/js/config').config;
 var contentRepository = require('../app/js/contentRepository').ContentRepository(config.db);
 var superClipboard = require('../app/js/superClipboard').SuperClipboard(contentRepository);
 
 describe("super clipboard",function(){
-/*
+
     beforeEach(function(done){
         clearAllData(done);
         currentClipboardText="how are?";
     });
 
     it("save the clipboard string to the datastore",function(done){
-        spyOn(contentRepository,"save").and.callThrough();
+        spyOn(contentRepository,"save").andCallThrough();
         var dataSaved = false;
 
         superClipboard.save("my clipboard string 1",function(err,newClipboardData){
@@ -38,7 +39,7 @@ describe("super clipboard",function(){
             done();
         });
         expect(contentRepository.save).toHaveBeenCalled();
-    });*/
+    });
 
     describe("for existing data",function(){
         var testNumber = 1;
@@ -70,7 +71,7 @@ describe("super clipboard",function(){
         it("should not store last seen clipboard item when superclipboard is re-initialised",function(done){
             console.log("\n\n","in test 3","\n");
             currentClipboardText ="random clipboard string _2_";
-            spyOn(superClipboard,"save").and.callThrough();
+            spyOn(superClipboard,"save").andCallThrough();
             var clipboardTimer = superClipboard.init(function(data){
                 console.log("in init callback");
             });
@@ -87,14 +88,15 @@ describe("super clipboard",function(){
 
         it("should update the last updated timestamp to now when an item is selected",function(done){
             console.log("\n\n","in test 2","\n");
-            spyOn(contentRepository,"markAsUpdated").and.callThrough();
+            spyOn(contentRepository,"markAsUpdated").andCallThrough();
 
-            superClipboard.search("random clipboard string _1_",function(err,data){
+            superClipboard.search("random clipboard string _1_",function(data){
                 var dataFetched = Array.isArray(data) ? data[0]:data;
                 var updatedTime = dataFetched.updatedAt;
 
                 superClipboard.selectItem(dataFetched,function(){
-                    var argsToMarkAsUpdated = contentRepository.markAsUpdated.calls.argsFor(0);
+                    var argsToMarkAsUpdated = contentRepository.markAsUpdated.calls[0].args;
+                    console.log(argsToMarkAsUpdated);
                     expect(argsToMarkAsUpdated[1].updatedAt).toBeGreaterThan(updatedTime);
                 });
 
