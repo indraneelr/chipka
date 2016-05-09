@@ -1,7 +1,6 @@
 body{
-    /*width: 500px;*/
-    /*height: 600px;*/
-    background-color: #22282A;
+    /*background-color: #22282A;*/
+    background-color: #1d1f21;
     /*color: #DFDFBF;*/
     color: #D0B078;
     padding: 15px;
@@ -16,12 +15,10 @@ html{
     padding: 0px 10px 0px 10px;
     outline: 0;
     color: #DFDFBF;
-
 }
 .search-box{
     line-height:30px;
     font-size: medium;
-
 }
 .section{
     border: 2px solid #304030;
@@ -39,22 +36,45 @@ ul{
     outline:none;
     appearance:none;
 }
+.clipboard .list-group-item{
+  padding:10px 0 5px 0;
+  border-bottom: 1px solid #284628;
+}
 .clipboard .item{
-    padding: 10px 10px 2px 10px;
-    border-bottom: 1px solid #284628;
+    padding: 0px 5px 0px 10px;
+    overflow: hidden;
+    display: -webkit-box;
+   -webkit-line-clamp: 5;
+   -webkit-box-orient: vertical;
 }
 .clipboard .item:focus{
-    background-color: green;
-}
-.clipboard .items li:first-of-type{
     background-color: #152515;
+}
+
+.remove{
+  position: relative;
+  float: right;
+  left: -3px;
+  top: -4px;
+  cursor: pointer;
+  color: #285028;
+  font-size: 1.1em;
+  opacity: 0;
+}
+.list-group-item:hover .remove{
+  opacity: 1;
+}
+
+.clipboard .items li:first-of-type{
+    /*background-color: #152515;*/
 }
 .clipboard{
     padding: 0px;
     background-color: #151515;
-    border-style: inset;
+    /*border-style: inset;*/
     border-width: medium;
     overflow: auto;
+    border: 1px solid #121212;
 
 }
 .button-icon {
@@ -93,4 +113,3 @@ ul{
     background-size: 24px 24px;
     right: 6px;
 }
-

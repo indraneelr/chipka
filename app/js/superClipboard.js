@@ -11,6 +11,8 @@ var config= require('./config').config;
 
 var lastSeenClipboardItem=null;
 
+var logger =console;
+
 var superClipboard = function(contentRepository){
     var stopPolling = false;
     return {
@@ -65,6 +67,17 @@ var superClipboard = function(contentRepository){
             clipboardData.createdAt = now;
             clipboardData.updatedAt = now;
             contentRepository.save(clipboardData, resultCallback);
+        },
+        delete:function(item,callback){
+            contentRepository.delete(item,function(err,result){
+                if(err){
+                    logger.log(err);
+                }
+                if (item.content === lastSeenClipboardItem) {
+                    clipboard.clear();
+                }
+                callback(result);
+            })
         }
     }
 };

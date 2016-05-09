@@ -6,10 +6,10 @@
     "babel-watch": "./node_modules/.bin/babel --watch --presets react  app/js/view --out-file app/js/lib/_index.js",
     "build": "./node_modules/.bin/babel --presets react app/js/view  --out-file app/js/lib/_index.js",
     "start": "electron ./app",
-    "package": "cp -r build app/  && electron-packager ./app chipka --platform darwin --arch x64 --out ~/Desktop/chipka --version 0.30.2 --overwrite --icon=./app/img/app-icon.icns",
+    "package": "cp -r build app/  && electron-packager ./app chipka --platform darwin --arch x64 --out ~/Desktop/chipka --version 0.37.8 --overwrite --icon=./app/img/chipk-clip.png",
     "test": "jasmine-node --verbose --captureExceptions test",
     "testUI": "jest",
-    "dist":"node_modules/.bin/build --platform darwin --arch x64"
+    "dist": "node_modules/.bin/build --platform darwin --arch x64"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
@@ -19,7 +19,7 @@
     "babelify": "^7.2.0",
     "electron-builder": "^3.14.0",
     "electron-packager": "^5.0.1",
-    "electron-prebuilt": "^0.30.3",
+    "electron-prebuilt": "^0.37.8",
     "jasmine-core": "^2.4.1",
     "jest-cli": "*",
     "karma": "^0.13.22",

@@ -4,6 +4,7 @@
 //TODO : introduce exception handling
 //TODO : unit tests
 
+// var ipc = require('electron').ipcRenderer;
 var ipc = require('ipc');
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -133,7 +134,9 @@ var ClipboardItems = React.createClass({
         ipc.send('item-selected',item);
         this.focusOut(this.refs[index]);
     },
-
+    deleteItem: function(item,index){
+        ipc.send('item-deleted',item);
+    },
     keypress:function(event,item,index){
         if(event ){
             switch(event.keyCode){
@@ -154,12 +157,12 @@ var ClipboardItems = React.createClass({
         var self = this;
         self.refs= [];
         return (
-            <ul tabIndex="0" className="items" size="10" > {
+            <ul tabIndex="0" className="items list-group" size="10" > {
                     this.props.items.map(function(item,index){
                         var content = item ? item.content: "";
                         return <li
                             tabIndex="1"
-                            className="item"
+                            className="list-group-item"
                             onKeyDown={function(event){
                                 if(event.target === self.refs[index]){
                                     self.keypress(event.nativeEvent, item, index);
@@ -170,7 +173,9 @@ var ClipboardItems = React.createClass({
                                 if(elm){
                                     self.refs[index] = elm;
                                 }
-                            }}>{content}
+                            }}>
+                            <span onClick={self.deleteItem.bind(self,item,index)} className="remove glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span className="item">{content}</span>
                             </li>
                     })
                 }

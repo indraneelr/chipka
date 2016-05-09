@@ -3,8 +3,8 @@
 var config = {
     db:"/Users/indraner/dev/projects/myprojects/chipka/db/clipboardHistory",
     pollInterval:100,
-    width:600,
-    height:550,
+    width:550,
+    height:600,
     resizable:true,
     frame:false,
     appShortcut:"cmdOrCtrl+shift+c",

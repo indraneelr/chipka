@@ -32,6 +32,9 @@ var repository =function(filename) {
             db.on("compaction.done",function(err,response){
                 callback(err,response);
             });
+        },
+        delete :function(item,callback){
+            db.remove(item,{},callback)
         }
 
     }
