@@ -5,3 +5,4 @@ build
 db
 *.iml
 .DS_Store
+app/js/lib/_index.js

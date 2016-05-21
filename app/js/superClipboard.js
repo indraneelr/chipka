@@ -82,7 +82,27 @@ var superClipboard = function(contentRepository){
     }
 };
 
+function contains(text,pattern){
+    if(text && pattern){
+      return text.search(pattern) >= 0? true :false;
+    }
+    return false;
+}
+
+function clipboardHasImage(){
+   var formats = clipboard.availableFormats();
+   if(formats){
+      return formats.findIndex(function(format) {
+        return contains(format,"image");
+      }) >=0 ? true:false;
+   }
+   return false;
+}
 function recordLastClipboardSelection(updateCallback) {
+    if(clipboardHasImage()){
+      console.log("clipboard has image");
+      return;
+    }
     var text = clipboard.readText();
     var self = this;
     fetchLastSeenClipboardText.call(this,function(clipboardItem){
